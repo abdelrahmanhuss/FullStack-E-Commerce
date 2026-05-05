@@ -43,6 +43,7 @@ export class UsersService {
 
     return {
       token,
+      success: true,
       user: {
         id: user.id,
         name: user.name,
@@ -73,6 +74,7 @@ export class UsersService {
 
     return {
       token,
+      success: true,
       user: {
         id: user.id,
         name: user.name,

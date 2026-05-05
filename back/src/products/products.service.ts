@@ -24,11 +24,11 @@ export class ProductsService {
     };
   }
 
-  getAll() {
+  async getAll() {
     return {
       success: true,
       message: 'Products fetched successfully',
-      data: this.prisma.product.findMany({
+      data: await this.prisma.product.findMany({
         orderBy: { createdAt: 'desc' },
       }),
     };

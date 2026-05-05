@@ -7,7 +7,7 @@ const AdminLogin = () => {
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-      const url = 'http://localhost:4000'
+      const url = 'http://localhost:4000/admin/login'
 
 
       useEffect(()=>{

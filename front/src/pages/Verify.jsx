@@ -13,6 +13,35 @@ const Verify = () => {
 
   const [status, setStatus] = useState("loading");
 
+  useEffect(()=>{
+    if(!token) return;
+
+    const verifyPayment = async()=>{
+      try {
+        const response = await axios.post(`${url}/orders/verify`, {
+          success,orderId
+        })
+        if(response.data.success){
+          await clearCart()
+          setStatus("success")
+          setTimeout(() => {
+            navigate("/myorders")
+          }, 2000);
+        }else {
+          setStatus("error")
+          setTimeout(() => {
+            navigate("/")
+          }, 2000);
+        }
+
+      }catch(err){
+        console.log(err);
+        
+      }
+    }
+    verifyPayment()
+  },[success, orderId, url, navigate, token])
+
   return (
     <section className='w-full min-h-screen flex items-center justify-center bg-gray-100'>
       <div className=' text-center flex flex-col items-center'>
