@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 const Product = () => {
   const { productId } = useParams()
-  const { addToCart,all_products } = useContext(ShopContext)
+  const { addToCart,all_products,url } = useContext(ShopContext)
   const product = all_products.find((product) => product._id === productId)
 
   const [ selectedColor, setSelectedColor ] = useState("Red")
@@ -26,7 +26,7 @@ const Product = () => {
       <div className=' max-w-6xl mx-auto w-full bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl flex flex-col md:flex-row gap-10 p-10'>
 
         <div className=' md:w-1/2 bg-white/5 flex items-center justify-center rounded-3xl p-6'>
-          <img src={product.image} alt={product.name} className=' w-64 h-64 object-contain rounded-2xl' />
+          <img src={`${url}/images/${product.image}`} alt={product.name} className=' w-64 h-64 object-contain rounded-2xl' />
         </div>
 
         <div className=' flex-1 flex flex-col gap-6'>

@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import { useNavigate } from 'react-router-dom'
-
+import axios from "axios"
 const Order = () => {
 
-  const { cartItems,all_products, getTotalCartAmount } = useContext(ShopContext)
+  const { cartItems,all_products, getTotalCartAmount,url,token } = useContext(ShopContext)
   const navigate = useNavigate()
   const totalAmount = getTotalCartAmount()
 
@@ -30,7 +30,39 @@ const Order = () => {
     alert('Order confirmed! Thank you for your purchase.');
     navigate('/');
   }
+  const placeOrder = async(e)=>{
+    e.preventDefault()
+    let orderItems = []
+    all_products.map((item)=>{
+      if(cartItems[item.id]>0){
+        let itemInfo = item;
+        itemInfo["quantity"] = cartItems[item.id]
+        orderItems.push(itemInfo)
+      }
+    })
+    let orderData = {
+      address:shipping,
+      item:orderItems,
+      amount:getTotalCartAmount()+2
+    }
+    let response = await axios.post(`${url}/orders/place`,orderData,{
+      headers:{token}
+    })
+    if(response.data.success){
+      const {session_url} = response.data
+      window.location.replace(session_url)
+    }else{
+      alert("Error")
+    }
+  }
 
+  useEffect(()=>{
+    if(!token){
+      navigate("/cart")
+    }else if(getTotalCartAmount() === 0){
+      navigate("cart")
+    }
+  },[token])
   return (
     <section className=' relative w-full min-h-screen flex items-center bg-linear-to-r from-indigo-900 via-purple-900 to-pink-900 text-white py-24 px-6 sm:px-10'>
       <div className='absolute inset-0 bg-black/30 backdrop-blur-sm pointer-events-none'>

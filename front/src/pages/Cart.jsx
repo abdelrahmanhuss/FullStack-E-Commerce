@@ -3,7 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 const Cart = () => {
-  const { cartItems, all_products,addToCart, removeFromCart, getTotalCartAmount } = useContext(ShopContext);
+  const { cartItems, all_products,addToCart, removeFromCart, getTotalCartAmount,url } = useContext(ShopContext);
   const navigate = useNavigate();
   const totalAmount = getTotalCartAmount();
 
@@ -32,7 +32,7 @@ return (
             {cartProducts.map((product) => (
               <div key={product._id} className='flex flex-col sm:flex-row items-center justify-between bg-white/10 border border-white/20 backdrop-blur-md p-6 rounded-3xl hover:shadow-cyan-400/30 transition-all'>
                   <div className='flex items-center gap-6'>
-                    <img src={product.image} alt={product.name} className='w-24 h-24 object-contain rounded-xl'/>
+                    <img src={`${url}/images/${product.image}`} alt={product.name} className='w-24 h-24 object-contain rounded-xl'/>
                     <div>
                       <h3 className=' text-xl font-semibold'>{product.name}</h3>
                       <p className='text-sm mt-1 line-clamp-1 text-gray-300'>{product.description}</p>
