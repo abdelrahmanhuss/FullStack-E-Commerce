@@ -18,28 +18,28 @@ export class OrdersController {
 
   @UseGuards(JwtAuthGuard)
   @Post('place')
-  placeOrder(@Req() req, @Body() dto: PlaceOrderDto) {
-    return this.ordersService.placeOrder(req.user.id, dto);
+  async placeOrder(@Req() req: any, @Body() dto: PlaceOrderDto) {
+    return await this.ordersService.placeOrder(req.user.sub, dto);
   }
 
   @Post('verify')
-  verifyPayment(@Body() body: any) {
-    return this.ordersService.verifyPayment(body);
+  async verifyPayment(@Body() body: any) {
+    return await this.ordersService.verifyPayment(body);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('userorders')
-  getMyOrders(@Req() req) {
-    return this.ordersService.getUserOrders(req.user.id);
+  async getMyOrders(@Req() req: any) {
+    return await this.ordersService.getUserOrders(req.user.sub);
   }
 
   @Get('list')
-  getAllOrders() {
-    return this.ordersService.getAllOrders();
+  async getAllOrders() {
+    return await this.ordersService.getAllOrders();
   }
 
-  @Patch('status')
-  updateStatus(@Param('id') id: string, @Body('status') status: string) {
-    return this.ordersService.updateOrderStatus(id, status);
+  @Patch('status/:id')
+  async updateStatus(@Param('id') id: string, @Body('status') status: string) {
+    return await this.ordersService.updateOrderStatus(id, status);
   }
 }

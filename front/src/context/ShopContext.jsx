@@ -24,18 +24,26 @@ const ShopContextProvider = ({children})=>{
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     },[cartItems]);
 
-    const addToCart = async(id, quantity = 1) => {
+    const addToCart = async (id, quantity = 1) => {
+    try {
+        await axios.post(`${url}/cart/add`, {
+            productId: String(id),
+            quantity
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
         setCartItems(prev => ({
             ...prev,
-            [id]: (prev[id] ? prev[id] + quantity : quantity)
+            [id]: (prev[id] || 0) + quantity
         }));
 
-        if(token){
-            await axios.post(`${url}/cart/add`, { id }, {
-                headers:{token}
-            });
-        }
-    };
+    } catch (err) {
+        console.log(err);
+    }
+};
 
     const removeFromCart = async(id, removeAll = false) => {
         setCartItems(prev => {
@@ -50,8 +58,8 @@ const ShopContextProvider = ({children})=>{
         if(token){
             try{
                 await axios.delete(`${url}/cart/remove`, {
-                    headers:{token},
-                    data:{id}
+            headers:{Authorization: `Bearer ${token}`},
+                    data:{productId:id}
                 });
             }catch(err){
                 console.log(err);
@@ -63,7 +71,8 @@ const ShopContextProvider = ({children})=>{
         if(token){
             try{
                 await axios.delete(`${url}/cart/clear`, {
-                    headers:{token}
+            headers:{Authorization: `Bearer ${token}`},
+
                 });
                 setCartItems({});
             }catch(err){
@@ -74,7 +83,8 @@ const ShopContextProvider = ({children})=>{
 
     const getTotalCartAmount = () => {
         return Object.entries(cartItems).reduce((total, [id, quantity]) => {
-            const product = products.find(p => p._id === id);
+            const product = products?.find(p => p.id?.toString() === id);
+if (!product) return total;
             return total + (product ? product.price * quantity : 0);
         }, 0);
     };
@@ -92,10 +102,11 @@ const ShopContextProvider = ({children})=>{
     const loadCartData = async(currentToken)=>{
         try{
             const response = await axios.get(`${url}/cart/get`, {
-                headers:{token: currentToken}
+                headers: {
+  Authorization: `Bearer ${currentToken}`,
+}
             });
-            setCartItems(response.data.cartData || {});
-        }catch(err){
+setCartItems(response.data.data?.cartData || response.data.cartData || {});        }catch(err){
             console.log(err);
         }
     };

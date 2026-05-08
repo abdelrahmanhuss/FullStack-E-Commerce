@@ -91,7 +91,7 @@ export const categories = [
 export const all_products = [
   // Products
   {
-    _id: "1",
+    id: "1",
     name: "Elegant Striped Flutter Sleeve Overlap Collar Peplum Hem Blouse",
     image: product_1,
     price: 120.00,
@@ -100,7 +100,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "2",
+    id: "2",
     name: "Stylish Floral Print Summer Dress with Belt and V Neck Design",
     image: product_2,
     price: 180.00,
@@ -109,7 +109,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "3",
+    id: "3",
     name: "Sophisticated Double Breasted Longline Blazer",
     image: product_3,
     price: 160.00,
@@ -118,7 +118,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "4",
+    id: "4",
     name: "Classic Double Breasted Belted Trench Coat",
     image: product_4,
     price: 200.00,
@@ -127,7 +127,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "5",
+    id: "5",
     name: "Fashionable High Waist A Line Midi Skirt with Button Detail",
     image: product_5,
     price: 250.00,
@@ -136,7 +136,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "6",
+    id: "6",
     name: "Chic Handbag with Gold Hardware and Removable Strap",
     image: product_6,
     price: 140.00,
@@ -145,7 +145,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "7",
+    id: "7",
     name: "Elegant Pointed Toe Stiletto Heels with Ankle Strap",
     image: product_7,
     price: 180.00,
@@ -154,7 +154,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "8",
+    id: "8",
     name: "Stylish Hooded Winter Coat with Faux Fur Trim",
     image: product_8,
     price: 150.00,
@@ -163,7 +163,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "9",
+    id: "9",
     name: "Chic Wide Leg Jumpsuit with Sleeveless Design",
     image: product_9,
     price: 280.00,
@@ -172,7 +172,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "10",
+    id: "10",
     name: "Fashionable Silk Scarf with Floral Print",
     image: product_10,
     price: 180.00,
@@ -181,7 +181,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "11",
+    id: "11",
     name: "Elegant Pointed Toe Pumps with Kitten Heel",
     image: product_11,
     price: 80.00,
@@ -190,7 +190,7 @@ export const all_products = [
     category: "Men",
   },
   {
-    _id: "12",
+    id: "12",
     name: "Classic Fit Two Button Wool Blend Suit",
     image: product_12,
     price: 240.00,
@@ -201,7 +201,7 @@ export const all_products = [
 
   // Women's Products
   {
-    _id: "13",
+    id: "13",
     name: "Green Solid Zippered Full Zip Slim Fit Bomber Jacket",
     image: product_13,
     price: 180.00,
@@ -210,7 +210,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "14",
+    id: "14",
     name: "Casual Denim Shirt with Button Down Front and Chest Pockets",
     image: product_14,
     price: 160.00,
@@ -219,7 +219,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "15",
+    id: "15",
     name: "Classic Polo Shirt with Contrast Collar and Cuffs",
     image: product_15,
     price: 120.00,
@@ -228,7 +228,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "16",
+    id: "16",
     name: "Casual Hooded Jacket with Front Pockets and Drawstring",
     image: product_16,
     price: 200.00,
@@ -237,7 +237,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "17",
+    id: "17",
     name: "Dapper Formal Shirt with Spread Collar and French Cuffs",
     image: product_17,
     price: 140.00,
@@ -246,7 +246,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "18",
+    id: "18",
     name: "Casual Slim Fit Chino Pants with Stretch Fabric",
     image: product_18,
     price: 160.00,
@@ -255,7 +255,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "19",
+    id: "19",
     name: "Stylish Leather Belt with Automatic Buckle",
     image: product_19,
     price: 60.00,
@@ -264,7 +264,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "20",
+    id: "20",
     name: "Cool Graphic Tee with Crew Neck and Short Sleeves",
     image: product_20,
     price: 80.00,
@@ -273,7 +273,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "21",
+    id: "21",
     name: "Stylish Lace Up Sneakers with Breathable Mesh Upper",
     image: product_21,
     price: 120.00,
@@ -282,7 +282,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "22",
+    id: "22",
     name: "Classic Button Down Cardigan with Ribbed Cuffs and Hem",
     image: product_22,
     price: 120.00,
@@ -291,7 +291,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "23",
+    id: "23",
     name: "Cool Cargo Pants with Multiple Pockets and Relaxed Fit",
     image: product_23,
     price: 140.00,
@@ -300,7 +300,7 @@ export const all_products = [
     category: "Women",
   },
   {
-    _id: "24",
+    id: "24",
     name: "Cool Denim Outfit with Jacket and Jeans",
     image: product_24,
     price: 140.00,
@@ -311,7 +311,7 @@ export const all_products = [
 
   // Kids' Products
   {
-    _id: "25",
+    id: "25",
     name: "Sporty Youth Track Suit with Zip Up Jacket and Jogger Pants",
     image: product_25,
     price: 220.00,
@@ -320,7 +320,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "26",
+    id: "26",
     name: "Casual Teen's Hoodie with Kangaroo Pocket and Ribbed Cuffs",
     image: product_26,
     price: 100.00,
@@ -329,7 +329,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "27",
+    id: "27",
     name: "Adorable Toddler Dress with Ruffle Sleeves and Bow Detail",
     image: product_27,
     price: 120.00,
@@ -338,7 +338,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "28",
+    id: "28",
     name: "Playful Kid's T Shirt with Fun Prints and Soft Cotton Fabric",
     image: product_28,
     price: 180.00,
@@ -347,7 +347,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "29",
+    id: "29",
     name: "Colorful Kids' Raincoat with Animal Design",
     image: product_29,
     price: 75.00,
@@ -356,7 +356,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "30",
+    id: "30",
     name: "Adorable Baby Bib Set with Cute Patterns",
     image: product_30,
     price: 30.00,
@@ -365,7 +365,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "31",
+    id: "31",
     name: "Comfortable Kids' Slip On Sneakers with Elastic Laces",
     image: product_31,
     price: 55.00,
@@ -374,7 +374,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "32",
+    id: "32",
     name: "Soft Baby Blanket with Cute Animal Embroidery",
     image: product_32,
     price: 40.00,
@@ -383,7 +383,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "33",
+    id: "33",
     name: "Playful Kids' Swim Trunks with Colorful Print",
     image: product_33,
     price: 35.00,
@@ -392,7 +392,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "34",
+    id: "34",
     name: "Cozy Kids' Fleece Pajama Set with Cartoon Characters",
     image: product_34,
     price: 45.00,
@@ -401,7 +401,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "35",
+    id: "35",
     name: "Colorful Kids' Backpack with Adjustable Shoulder Straps",
     image: product_35,
     price: 50.00,
@@ -410,7 +410,7 @@ export const all_products = [
     category: "Kids",
   },
   {
-    _id: "36",
+    id: "36",
     name: "Stylish Kids' Denim Shorts with Embroidered Details",
     image: product_36,
     price: 40.00,
@@ -421,7 +421,7 @@ export const all_products = [
 
   // Unisex Products
   {
-    _id: "37",
+    id: "37",
     name: "Versatile Unisex Canvas Backpack with Laptop Compartment",
     image: product_37,
     price: 65.00,
@@ -430,7 +430,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "38",
+    id: "38",
     name: "Classic Unisex Crewneck Sweatshirt with Minimalist Design",
     image: product_38,
     price: 55.00,
@@ -439,7 +439,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "39",
+    id: "39",
     name: "Comfortable Unisex Jogger Pants with Drawstring Waist",
     image: product_39,
     price: 50.00,
@@ -448,7 +448,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "40",
+    id: "40",
     name: "Stylish Unisex Aviator Sunglasses with UV Protection",
     image: product_40,
     price: 30.00,
@@ -457,7 +457,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "41",
+    id: "41",
     name: "Casual Unisex Denim Jacket with Button Up Front",
     image: product_41,
     price: 80.00,
@@ -466,7 +466,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "42",
+    id: "42",
     name: "Versatile Unisex Messenger Bag with Adjustable Strap",
     image: product_42,
     price: 60.00,
@@ -475,7 +475,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "43",
+    id: "43",
     name: "Classic Unisex Wool Fedora Hat with Grosgrain Band",
     image: product_43,
     price: 45.00,
@@ -484,7 +484,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "44",
+    id: "44",
     name: "Comfortable Unisex Cotton T Shirt with Crew Neck",
     image: product_44,
     price: 25.00,
@@ -493,7 +493,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "45",
+    id: "45",
     name: "Elegant Unisex Stainless Steel Watch with Leather Strap",
     image: product_45,
     price: 120.00,
@@ -502,7 +502,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "46",
+    id: "46",
     name: "Casual Unisex Baseball Cap with Embroidered Logo",
     image: product_46,
     price: 20.00,
@@ -511,7 +511,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "47",
+    id: "47",
     name: "Casual Unisex Baseball Cap with Embroidered Logo",
     image: product_47,
     price: 20.00,
@@ -520,7 +520,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "48",
+    id: "48",
     name: "Ultra HD 4K Smart LED TV",
     image: product_48,
     price: 20.00,
@@ -529,7 +529,7 @@ export const all_products = [
     category: "Electronics",
   },
   {
-    _id: "49",
+    id: "49",
     name: "Long-Lasting Matte Liquid Lipstick",
     image: product_49,
     price: 20.00,
@@ -538,7 +538,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "50",
+    id: "50",
     name: "Hydrating Facial Moisturizer with SPF",
     image: product_50,
     price: 20.00,
@@ -547,7 +547,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "51",
+    id: "51",
     name: "All-in-One BB Cream with SPF",
     image: product_51,
     price: 20.00,
@@ -556,7 +556,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "52",
+    id: "52",
     name: "Nourishing Argan Oil Hair Serum",
     image: product_52,
     price: 20.00,
@@ -565,7 +565,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "53",
+    id: "53",
     name: "Mineral-Based Pressed Powder Foundation",
     image: product_53,
     price: 20.00,
@@ -574,7 +574,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "54",
+    id: "54",
     name: "Creamy Concealer Stick with Full Coverage",
     image: product_54,
     price: 20.00,
@@ -583,7 +583,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "55",
+    id: "55",
     name: "Matte Finish Setting Spray",
     image: product_55,
     price: 20.00,
@@ -592,7 +592,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "56",
+    id: "56",
     name: "Hydrating Lip Balm with Shea Butter",
     image: product_56,
     price: 20.00,
@@ -601,7 +601,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "57",
+    id: "57",
     name: "Smoky Eye Shadow Palette",
     image: product_57,
     price: 20.00,
@@ -610,7 +610,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "58",
+    id: "58",
     name: "Anti-Aging Retinol Cream",
     image: product_58,
     price: 20.00,
@@ -619,7 +619,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "59",
+    id: "59",
     name: "Lightweight Tinted Moisturizer",
     image: product_59,
     price: 20.00,
@@ -628,7 +628,7 @@ export const all_products = [
     category: "Cosmetics",
   },
   {
-    _id: "60",
+    id: "60",
     name: "Ultra-Fine Liquid Eyeliner",
     image: product_60,
     price: 20.00,

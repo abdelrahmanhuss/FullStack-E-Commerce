@@ -9,8 +9,11 @@ const Order = () => {
   const totalAmount = getTotalCartAmount()
 
   const cartProducts = Object.keys(cartItems).map((itemId) => {
-    const product = all_products.find((product) => product._id === itemId);
-    return { ...product, quantity: cartItems[itemId] };
+    const product = all_products.find((product) => product.id === itemId);
+    if (product) {
+      return { ...product, quantity: cartItems[itemId] };
+    }
+    return null;
   }).filter(Boolean);
 
   const [shipping, setShipping] = useState({
@@ -22,37 +25,40 @@ const Order = () => {
   const handleChange = (e) => {
     setShipping({ ...shipping, [e.target.name]: e.target.value })
   };
-  const handleConfirmOrder = (e) => {
-    if (!shipping.name || !shipping.address || !shipping.city || !shipping.phone) {
-      alert('Please fill in all shipping details.');
-      return;
-    }
-    alert('Order confirmed! Thank you for your purchase.');
-    navigate('/');
-  }
-  const placeOrder = async(e)=>{
+  const placeOrder = async (e) => {
     e.preventDefault()
-    let orderItems = []
-    all_products.map((item)=>{
-      if(cartItems[item.id]>0){
-        let itemInfo = item;
-        itemInfo["quantity"] = cartItems[item.id]
-        orderItems.push(itemInfo)
-      }
-    })
-    let orderData = {
-      address:shipping,
-      item:orderItems,
-      amount:getTotalCartAmount()+2
+    if (!shipping.name || !shipping.address || !shipping.city || !shipping.phone) {
+      alert('Please fill in all shipping details.')
+      return
     }
-    let response = await axios.post(`${url}/orders/place`,orderData,{
-      headers:{token}
-    })
-    if(response.data.success){
-      const {session_url} = response.data
-      window.location.replace(session_url)
-    }else{
-      alert("Error")
+
+    const orderItems = cartProducts.map((product) => ({
+      name: product.name,
+      price: product.price,
+      quantity: product.quantity,
+    }))
+
+    const orderData = {
+      address: shipping,
+      items: orderItems,
+      amount: getTotalCartAmount() + 2,
+    }
+
+    try {
+      const response = await axios.post(`${url}/orders/place`, orderData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      if (response.data.success && response.data.checkoutUrl) {
+        window.location.replace(response.data.checkoutUrl)
+      } else {
+        alert(response.data.message || 'Error placing order')
+      }
+    } catch (err) {
+      console.log(err)
+      alert('Error placing order')
     }
   }
 
@@ -82,7 +88,7 @@ const Order = () => {
             <div className=' grid md:grid-cols-2 gap-10'>
               <div className=' space-y-6'>
                 {cartProducts.map((product) => (
-                  <div key={product._id} className='flex items-center gap-4 bg-white/10 shadow-lg border border-white/20 backdrop-blur-md p-4 rounded-2xl'>
+                  <div key={product.id} className='flex items-center gap-4 bg-white/10 shadow-lg border border-white/20 backdrop-blur-md p-4 rounded-2xl'>
                     <img src={product.image} alt={product.name} className='w-20 h-20 object-contain rounded-xl'/>
                     <div>
                       <h3 className='text-lg font-semibold'>{product.name}</h3>
@@ -99,13 +105,16 @@ const Order = () => {
               <div className=' bg-white/10 p-8 rounded-3xl backdrop-blur-md border border-white/20 shadow-xl'>
                 <h3 className='text-2xl font-semibold mb-6 text-center'>Shipping Details</h3>
                 <div className='space-y-4'>
+                  <form onSubmit={placeOrder}>
+
                   <input type="text" name="name" placeholder='Full Name' value={shipping.name} onChange={handleChange} className='w-full px-4 py-3 rounded-xl bg-white/15 placeholder-gray-300 border border-white/30 text-white outline-none focus:ring-2 focus:ring-cyan-400' />
                   <input type="text" name="address" placeholder='Address' value={shipping.address} onChange={handleChange} className='w-full px-4 py-3 rounded-xl bg-white/15 placeholder-gray-300 border border-white/30 text-white outline-none focus:ring-2 focus:ring-cyan-400' />
                   <input type="text" name="city" placeholder='City' value={shipping.city} onChange={handleChange} className='w-full px-4 py-3 rounded-xl bg-white/15 placeholder-gray-300 border border-white/30 text-white outline-none focus:ring-2 focus:ring-cyan-400' />
                   <input type="text" name="phone" placeholder='Phone Number' value={shipping.phone} onChange={handleChange} className='w-full px-4 py-3 rounded-xl bg-white/15 placeholder-gray-300 border border-white/30 text-white outline-none focus:ring-2 focus:ring-cyan-400' />
-                  <button onClick={handleConfirmOrder} className='w-full bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 py-4 rounded-xl text-white font-semibold shadow-lg hover:opacity-90 transition-all mt-4'>
+                  <button type='submit' className='w-full bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 py-4 rounded-xl text-white font-semibold shadow-lg hover:opacity-90 transition-all mt-4'>
                     Confirm Order
                   </button>
+                  </form>
                 </div>
               </div>
               </div>

@@ -7,7 +7,7 @@ const Add = () => {
     const [data, setData] = useState({
         name: '',
         description: '',
-        price: '',
+        price: 0,
         category: '',
     });
 
@@ -26,6 +26,15 @@ const Add = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
+        if (
+    !data.name.trim() ||
+    !data.description.trim() ||
+    !data.price ||
+    !data.category
+  ) {
+    alert("Please fill all fields");
+    return;
+  }
             const formData = new FormData();
             formData.append('name', data.name);
             formData.append('description', data.description);
@@ -34,11 +43,11 @@ const Add = () => {
             if (image) {
                 formData.append('image', image);
             }
-            try {
+        try {            
                 const response = await axios.post(`${url}/products/add`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
+  Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+}
                 });
                 if (response.data.success) {
                     setData({
@@ -50,10 +59,10 @@ const Add = () => {
                     setImage(null);
                     alert('Product added successfully!');
                 }
-            } catch (error) {
+        } catch (error) {
                 console.error('Error adding product:', error);
                 alert('Failed to add product. Please try again.');
-            }
+        }
         }
 
   return (

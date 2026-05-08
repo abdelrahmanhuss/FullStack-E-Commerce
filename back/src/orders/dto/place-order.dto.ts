@@ -1,33 +1,57 @@
+import { Type } from 'class-transformer';
 import {
   IsArray,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
   ValidateNested,
+  IsNumber,
+  IsObject,
+  IsString,
+  IsNotEmpty,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+
+class AddressDto {
+  @IsString()
+  @IsNotEmpty()
+  name!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  address!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  city!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  phone!: string;
+}
 
 class OrderItemDto {
   @IsString()
-  name: string;
+  @IsNotEmpty()
+  name!: string;
 
+  @Type(() => Number)
   @IsNumber()
-  price: number;
+  price!: number;
 
+  @Type(() => Number)
   @IsNumber()
-  quantity: number;
+  quantity!: number;
 }
 
 export class PlaceOrderDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => OrderItemDto)
-  items: OrderItemDto[];
+  items!: OrderItemDto[];
 
+  @Type(() => Number)
   @IsNumber()
-  amount: number;
+  amount!: number;
 
-  @IsString()
-  @IsNotEmpty()
-  address: string;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => AddressDto)
+  address!: AddressDto;
 }

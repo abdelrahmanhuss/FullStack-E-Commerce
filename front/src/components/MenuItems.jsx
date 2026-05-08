@@ -28,7 +28,7 @@ const MenuItems = ({ setSideBarOpen, isMobile }) => {
 
 
   return (
-    <div className={`flex md:justify-center lg:justify-end ${isMobile ? 'flex space-y-6 items-center px-4 gap-y-2': 'flex-row w-full items-center gap-4'}`}>
+    <div className={`flex md:justify-center lg:justify-end ${isMobile ? 'flex-col space-y-6 items-center px-4 gap-y-2': 'flex-row w-full items-center gap-4'}`}>
       {
         menuItemsData.map(({to,label,Icon}) => location.pathname === '/' ?
         (
@@ -66,7 +66,6 @@ const MenuItems = ({ setSideBarOpen, isMobile }) => {
           </button>
         ) : (
           <div className='flex items-center gap-4'>
-            <User className='w-6 h-6' />
             <button onClick={handleLogout} className='flex items-center gap-2 px-4 py-3 rounded-lg h-9 bg-red-500 transition-all text-white font-semibold hover:bg-red-600 '>
               Log Out
             </button>

@@ -2,97 +2,100 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
-  BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 import { PlaceOrderDto } from './dto/place-order.dto';
 
-type StripeClient = InstanceType<typeof Stripe>;
-
 @Injectable()
 export class OrdersService {
-  private stripe: StripeClient | null = null;
-
+  private stripe: InstanceType<typeof Stripe> | null = null;
   constructor(
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
   ) {}
 
-  private getStripe(): StripeClient {
+  private getStripe(): InstanceType<typeof Stripe> {
     if (this.stripe) return this.stripe;
 
     const secretKey = this.config.get<string>('STRIPE_SECRET_KEY');
 
     if (!secretKey) {
-      throw new InternalServerErrorException(
-        'Stripe secret key is missing in env',
-      );
+      throw new InternalServerErrorException('Stripe secret key is missing');
     }
 
     this.stripe = new Stripe(secretKey);
+
     return this.stripe;
   }
 
   async placeOrder(userId: string, dto: PlaceOrderDto) {
-    const { items, amount, address } = dto;
+    try {
+      console.log(dto);
+      const { items, amount, address } = dto;
 
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-    });
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+      });
 
-    if (!user) throw new NotFoundException('User not found');
+      if (!user) throw new NotFoundException('User not found');
 
-    const order = await this.prisma.order.create({
-      data: {
-        userId,
-        items: items as any,
-        amount,
-        address,
-        status: 'pending',
-        payment: false,
-      },
-    });
+      const order = await this.prisma.order.create({
+        data: {
+          userId,
+          items: items as any,
+          amount,
+          address: JSON.parse(JSON.stringify(address)),
+          status: 'pending',
+          payment: false,
+        },
+      });
 
-    const line_items: any[] = items.map(
-      (item) => ({
+      const line_items = items.map((item) => ({
         price_data: {
           currency: 'usd',
           product_data: {
             name: item.name,
           },
-          unit_amount: Math.round(item.price * 100),
+          unit_amount: Math.round(Number(item.price) * 100),
         },
-        quantity: item.quantity,
-      }),
-    );
+        quantity: Number(item.quantity),
+      }));
 
-    line_items.push({
-      price_data: {
-        currency: 'usd',
-        product_data: {
-          name: 'Shipping Fee',
+      line_items.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'Shipping Fee',
+          },
+          unit_amount: 200,
         },
-        unit_amount: 1000,
-      },
-      quantity: 1,
-    });
+        quantity: 1,
+      });
 
-    const stripe = this.getStripe();
+      const stripe = this.getStripe();
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items,
-      mode: 'payment',
-      success_url: `${this.config.get<string>('FRONTEND_URL')}/verify?success=true&orderId=${order.id}`,
-      cancel_url: `${this.config.get<string>('FRONTEND_URL')}/verify?success=false&orderId=${order.id}`,
-    });
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${this.config.get<string>(
+          'FRONTEND_URL',
+        )}/verify?success=true&orderId=${order.id}`,
+        cancel_url: `${this.config.get<string>(
+          'FRONTEND_URL',
+        )}/verify?success=false&orderId=${order.id}`,
+      });
 
-    return {
-      success: true,
-      checkoutUrl: session.url,
-    };
+      return {
+        success: true,
+        checkoutUrl: session.url,
+      };
+    } catch (error) {
+      console.error('Error in placeOrder:', error);
+      throw error;
+    }
   }
 
   async verifyPayment(body: { orderId: string; success: boolean }) {
@@ -126,7 +129,7 @@ export class OrdersService {
     await this.prisma.user.update({
       where: { id: order.userId },
       data: {
-        cartData: [],
+        cartData: {} as any,
       },
     });
 
@@ -144,12 +147,14 @@ export class OrdersService {
   }
 
   async getAllOrders() {
-    return this.prisma.order.findMany({
-      include: {
-        user: true,
-      },
-      orderBy: { createdAt: 'desc' },
-    });
+    return {
+      success: true,
+      data: await this.prisma.order.findMany({
+        include: { user: true },
+        orderBy: { createdAt: 'desc' },
+      }),
+      message: 'Orders fetched successfully',
+    };
   }
 
   async updateOrderStatus(id: string, status: string) {
