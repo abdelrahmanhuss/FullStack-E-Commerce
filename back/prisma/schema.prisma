@@ -10,6 +10,10 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+enum Role {
+  USER
+  ADMIN
+}
 
 model User {
   id    String @id @default(cuid())
@@ -19,12 +23,13 @@ model User {
   cartData Json
   isAdmin Boolean @default(false)
   orders Order[]
+  role     Role @default(USER)
 }
 
 model Product {
   id          String @id @default(cuid())
   name        String
-  image       String
+  image       String?
   price       Float
   description String
   category    String
@@ -38,7 +43,7 @@ model Order {
   user      User     @relation(fields: [userId], references: [id])
   items     Json
   amount    Float
-  address   String
+  address   Json
   status    String  @default("pending")
   payment   Boolean  @default(false)
   createdAt DateTime @default(now())

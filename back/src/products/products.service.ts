@@ -4,20 +4,24 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import CreateProductDto from './dto/createProduct.dto';
 import * as fs from 'fs';
 
 @Injectable()
 export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: any, req: any) {
-    let image_filename = `${req.file.filename}`;
-    const product = await this.prisma.product.create({
+  async create(data: CreateProductDto, file?: Express.Multer.File) {
+    const image_filename = file?.filename;
+
+    await this.prisma.product.create({
       data: {
         ...data,
-        image: image_filename,
+        price: Number(data.price),
+        image: image_filename ?? '',
       },
     });
+
     return {
       success: true,
       message: 'Product created successfully',
@@ -43,11 +47,11 @@ export class ProductsService {
       throw new NotFoundException('Product not found');
     }
 
-      return {
-        success: true,
-        message: 'Product fetched successfully',
-        data: product,
-      };
+    return {
+      success: true,
+      message: 'Product fetched successfully',
+      data: product,
+    };
   }
 
   async removeProduct(id: string) {
@@ -57,7 +61,7 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException('Product not found');
     }
-    fs.unlinkSync(`public/uploads/${product.image}`);
+    if (product.image) fs.unlinkSync(`public/uploads/${product.image}`);
     await this.prisma.product.delete({
       where: { id },
     });

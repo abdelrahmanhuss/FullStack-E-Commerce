@@ -15,9 +15,10 @@ import { ProductsService } from './products.service';
 import multer from 'multer';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import CreateProductDto from './dto/createProduct.dto';
 
 const storage = multer.diskStorage({
-  destination: "uploads",
+  destination: 'uploads',
   filename: (req, file, cb) => {
     return cb(null, `${Date.now()}-${file.originalname}`);
   },
@@ -25,13 +26,18 @@ const storage = multer.diskStorage({
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
   private readonly upload = multer({ storage });
+
+  constructor(private readonly productsService: ProductsService) {}
+
   @Post('add')
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('image', { storage }))
   @UsePipes(new ValidationPipe())
-  @UseGuards(JwtAuthGuard)
-  create(@Body() body: any, @UploadedFile() file: Express.Multer.File) {
+  // @UseGuards(JwtAuthGuard)
+  create(
+    @Body() body: CreateProductDto,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
     return this.productsService.create(body, file);
   }
   @Get('list')

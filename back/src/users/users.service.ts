@@ -83,7 +83,70 @@ export class UsersService {
     };
   }
 
-  getAllUsers() {
-    return this.prisma.user.findMany();
+  async getAllUsers() {
+    const users = await this.prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+    return {
+      success: true,
+      data: users,
+    };
+  }
+  async deleteUser(userId: string) {
+    await this.prisma.user.delete({
+      where: { id: userId },
+    });
+    return {
+      success: true,
+      message: `User deleted successfully`,
+    };
+  }
+  async makeAdmin(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      return {
+        success: false,
+        message: `User not found`,
+      };
+    }
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        isAdmin: true,
+        role: 'ADMIN',
+      },
+    });
+    return {
+      success: true,
+      message: `User promoted to admin successfully`,
+    };
+  }
+  async demoteToUser(userId: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      return {
+        success: false,
+        message: `User not found`,
+      };
+    }
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        isAdmin: false,
+        role: 'USER',
+      },
+    });
+    return {
+      success: true,
+      message: `User demoted to regular user successfully`,
+    };
   }
 }

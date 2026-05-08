@@ -8,8 +8,8 @@ const Cart = () => {
   const totalAmount = getTotalCartAmount();
 
   const cartProducts = Object.keys(cartItems).map((itemId) => {
-    const product = all_products.find((product) => product._id === itemId);
-    return { ...product, quantity: cartItems[itemId] };
+  const product = all_products.find((p) => p.id === itemId);
+  return { ...product, quantity: cartItems[itemId] };
   });
   
 return (
@@ -30,7 +30,7 @@ return (
           <>
           <div className='space-y-6 mb-12'>
             {cartProducts.map((product) => (
-              <div key={product._id} className='flex flex-col sm:flex-row items-center justify-between bg-white/10 border border-white/20 backdrop-blur-md p-6 rounded-3xl hover:shadow-cyan-400/30 transition-all'>
+              <div key={product.id} className='flex flex-col sm:flex-row items-center justify-between bg-white/10 border border-white/20 backdrop-blur-md p-6 rounded-3xl hover:shadow-cyan-400/30 transition-all'>
                   <div className='flex items-center gap-6'>
                     <img src={`${url}/images/${product.image}`} alt={product.name} className='w-24 h-24 object-contain rounded-xl'/>
                     <div>
@@ -40,14 +40,14 @@ return (
                     </div>
                   </div>
                   <div className='flex items-center gap-4 mt-6 sm:mt-10'>
-                    <button onClick={() => removeFromCart(product._id)} className='bg-white/20 hover:bg-white/30 p-2 rounded-full transition-all'>
+                    <button onClick={() => removeFromCart(product.id)} className='bg-white/20 hover:bg-white/30 p-2 rounded-full transition-all'>
                       <Minus className='w-5 h-5' />
                     </button>
                     <span className='text-lg font-semibold'>{product.quantity}</span>
-                    <button onClick={() => addToCart(product._id)} className='bg-white/20 hover:bg-white/30 p-2 rounded-full transition-all'>
+                    <button onClick={() => addToCart(product.id)} className='bg-white/20 hover:bg-white/30 p-2 rounded-full transition-all'>
                       <Plus className='w-5 h-5' />
                     </button>
-                    <button onClick={() => removeFromCart(product._id, true)} className='bg-red-500/70 hover:bg-red-600 p-2 rounded-full transition-all ml-4'>
+                    <button onClick={() => removeFromCart(product.id, true)} className='bg-red-500/70 hover:bg-red-600 p-2 rounded-full transition-all ml-4'>
                       <Trash2 className='w-5 h-5' />
                     </button>
                   </div>

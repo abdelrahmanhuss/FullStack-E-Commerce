@@ -5,27 +5,29 @@ import toast from "react-hot-toast"
 const Orders = () => {
   const url = 'http://localhost:4000';
   const [orders,setOrders] = useState([])
-  const [loading,setLoading] = useState([])
+  const [loading,setLoading] = useState(true)
 
   const fetchOrders = async()=>{
+    setLoading(true)
     try {
       const response = await axios.get(`${url}/orders/list`);
     if (response.data.success) {
       setOrders(response.data.data);
     } else {
       toast.error("Error")
+      
     }
   }catch(err){
-    console.log("Error");
+    console.log("Error : ", err);
+    toast.error("Error fetching orders")
+  }finally{
     setLoading(false)
-    
   }
   }
 
   const updateStatus = async(orderId,newStatus)=>{
     try {
-      const response = await axios.patch(`${url}/orders/status`,{
-        id:orderId,
+      const response = await axios.patch(`${url}/orders/status/${orderId}`,{
         status: newStatus
       });
     if (response.data.success) {
@@ -59,17 +61,19 @@ const Orders = () => {
   }
 
   return (
-    <section className='relative w-full min-h-screen bg-linear-to-r from-indigo-900 via-purple-900 to-pink-900 text-white py-24 px-6 sm:px-10'>
+    <section className='relative flex items-center justify-center w-full min-h-screen bg-linear-to-r from-indigo-900 via-purple-900 to-pink-900 text-white py-24 px-6 sm:px-10'>
       {
         orders.length === 0 ? (
           <p className=' text-center text-gray-300 text-xl'>No Orders Yet</p>
         ) : (
-          <div className=' grid gap-6 md:grid-cols-1 lg:grid-cols-2'>
+          <div className=' grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
             {
               orders.map((order)=>{
-                const total = order.item?.reduce(
-                  (sum,item) => sum + item.price * (item.quantity || 1),0
-                )
+                const total =
+  order.items?.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0
+  ) || 0;
                 return (
                   <div key={order.id} className=' bg-white/20 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex flex-col justify-between shadow-lg hover:scale-105 transform transition-all duration-300 lg:w-[60%] md:w-[60%] md:ml-20 lg:ml-20'>
                     <div>
@@ -96,8 +100,8 @@ const Orders = () => {
                       </p>
                       <div className=' space-y-1'>
                         {
-                          order.items?.map((item)=>{
-                            <div key={item.id} className=' flex justify-between items-center border-b border-white/20 pb-1'>
+                          order.items?.map((item)=>(
+                            <div key={item.name} className=' flex justify-between items-center border-b border-white/20 pb-1'>
                               <div className=' flex items-center gap-2'>
                                 {
                                   item.image && (
@@ -116,7 +120,7 @@ const Orders = () => {
                                 ${item.price * (item.quantity || 1)}
                               </p>
                             </div>
-                          })
+                          ))
                         }
                       </div>
                     </div>
@@ -126,7 +130,7 @@ const Orders = () => {
                           >
                             <option value="pending">Pending</option>
                             <option value="On the way">On the way</option>
-                            <option value="Deliverd">Delivered</option>
+                            <option value="Delivered">Delivered</option>
                         </select>
                         <span className=' font-bold text-gray-100 text-sm'>
                           Total : ${total}

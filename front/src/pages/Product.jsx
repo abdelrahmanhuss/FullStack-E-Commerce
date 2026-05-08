@@ -4,7 +4,7 @@ import { ShopContext } from '../context/ShopContext'
 const Product = () => {
   const { productId } = useParams()
   const { addToCart,all_products,url } = useContext(ShopContext)
-  const product = all_products.find((product) => product._id === productId)
+  const product = all_products.find((product) => product.id === productId)
 
   const [ selectedColor, setSelectedColor ] = useState("Red")
   const [ selectedSize, setSelectedSize ] = useState("M")

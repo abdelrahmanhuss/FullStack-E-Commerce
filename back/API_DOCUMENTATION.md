@@ -4,7 +4,7 @@ This document describes the backend API for the e-commerce app. It is designed t
 
 ## Base URL
 
-- Local development: `http://localhost:3000`
+- Local development: `http://localhost:4000`
 - CORS is enabled for: `http://localhost:5173`
 
 ## Authentication
