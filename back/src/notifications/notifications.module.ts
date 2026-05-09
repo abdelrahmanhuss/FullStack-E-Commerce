@@ -5,6 +5,7 @@ import { PrismaModule } from '../../prisma/prisma.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminGuard } from '../auth/guards/admin.guard';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
     }),
   ],
   controllers: [NotificationsController],
-  providers: [NotificationsService, JwtAuthGuard],
+  providers: [NotificationsService, JwtAuthGuard, AdminGuard],
 })
 export class NotificationsModule {}

@@ -5,7 +5,7 @@ import axios from "axios"
 
 const SignUp = () => {
   const navigate = useNavigate()
-  const {url,setToken,loadCartData} = useContext(ShopContext)
+  const {url,setToken,loadCartData,setUser,setIsAdmin} = useContext(ShopContext)
 
   const [formData, setFormData] = useState({
     name: '',
@@ -33,10 +33,18 @@ const SignUp = () => {
       const response = await axios.post(`${url}/users/signup`, signupData)
 
       if(response.data.success){
-        setToken(response.data.token)
-        localStorage.setItem("token" , response.data.token)
-        await loadCartData(response.data.token)
-        navigate("/")
+        const token = response.data.token
+        const user = response.data.user || {}
+        const isAdmin = !!user.isAdmin
+
+        setToken(token)
+        setUser(user)
+        setIsAdmin(isAdmin)
+        localStorage.setItem("token" , token)
+        localStorage.setItem("user", JSON.stringify(user))
+        localStorage.setItem("isAdmin", isAdmin ? 'true' : 'false')
+        await loadCartData(token)
+        navigate(isAdmin ? "/admin/list" : "/")
       }else{
         alert(response.data.message)
       }

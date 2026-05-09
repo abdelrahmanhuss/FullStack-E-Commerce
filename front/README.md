@@ -1,16 +1,61 @@
-# React + Vite
+# Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React frontend for the e-commerce application.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Built with React 19, Vite, Tailwind CSS, and React Router.
+- Uses `axios` to call the backend API at `http://localhost:4000`.
+- Stores session data in `localStorage` for `token`, `user`, `isAdmin`, and `cartItems`.
+- Includes admin protected routes for Add, List, Orders, Users, and Notifications.
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+cd front
+npm install
+```
 
-## Expanding the ESLint configuration
+## Run locally
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd front
+npm run dev
+```
+
+## Build for production
+
+```bash
+cd front
+npm run build
+```
+
+## Lint
+
+```bash
+cd front
+npm run lint
+```
+
+## Important files
+
+- `src/App.jsx` - application routes and admin route layout.
+- `src/context/ShopContext.jsx` - API base URL, auth token handling, cart logic, and product fetching.
+- `src/components/admin/` - admin dashboard pages.
+- `src/pages/` - main storefront pages.
+
+## Backend API URL
+
+The frontend is configured to hit the backend at:
+
+```txt
+http://localhost:4000
+```
+
+If you change the backend port, update `src/context/ShopContext.jsx`.
+
+## Notes
+
+- The frontend expects the backend to serve uploaded images under `/images/<filename>`.
+- Admin access is controlled in the frontend by `isAdmin` from local storage and `AdminProtectedRoute`.
+- The development frontend runs on `http://localhost:5173` by default.

@@ -32,6 +32,8 @@ export class UsersService {
         ...data,
         password: hashedPassword,
         cartData: [],
+        isAdmin: false,
+        role: 'USER',
       },
     });
 
@@ -39,6 +41,8 @@ export class UsersService {
       sub: user.id,
       email: user.email,
       name: user.name,
+      isAdmin: false,
+      role: 'USER',
     });
 
     return {
@@ -48,6 +52,8 @@ export class UsersService {
         id: user.id,
         name: user.name,
         email: user.email,
+        isAdmin: false,
+        role: 'USER',
       },
     };
   }
@@ -70,6 +76,8 @@ export class UsersService {
       sub: user.id,
       email: user.email,
       name: user.name,
+      isAdmin: user.isAdmin,
+      role: user.role,
     });
 
     return {
@@ -79,6 +87,8 @@ export class UsersService {
         id: user.id,
         name: user.name,
         email: user.email,
+        isAdmin: user.isAdmin,
+        role: user.role,
       },
     };
   }

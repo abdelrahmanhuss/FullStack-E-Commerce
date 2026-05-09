@@ -13,15 +13,14 @@ const menuItemsData = [
 
 const MenuItems = ({ setSideBarOpen, isMobile }) => {
 
-  const { cartItems,token, setToken } = useContext(ShopContext);
+  const { cartItems, token, isAdmin, logout } = useContext(ShopContext);
 
 
   const location = useLocation();
   const totalItems = Object.values(cartItems).reduce((acc, curr) => acc + curr, 0);
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setToken(false);
+    logout();
     navigate('/');
     setSideBarOpen && setSideBarOpen(false);
   }
@@ -66,6 +65,11 @@ const MenuItems = ({ setSideBarOpen, isMobile }) => {
           </button>
         ) : (
           <div className='flex items-center gap-4'>
+            {isAdmin && (
+              <button onClick={() => {navigate('/admin/list'); setSideBarOpen && setSideBarOpen(false)}} className='flex items-center gap-2 px-4 py-3 rounded-lg h-9 bg-cyan-500 transition-all text-white font-semibold hover:bg-cyan-600 '>
+                Admin
+              </button>
+            )}
             <button onClick={handleLogout} className='flex items-center gap-2 px-4 py-3 rounded-lg h-9 bg-red-500 transition-all text-white font-semibold hover:bg-red-600 '>
               Log Out
             </button>
