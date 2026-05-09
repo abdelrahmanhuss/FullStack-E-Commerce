@@ -89,7 +89,7 @@ const Order = () => {
               <div className=' space-y-6'>
                 {cartProducts.map((product) => (
                   <div key={product.id} className='flex items-center gap-4 bg-white/10 shadow-lg border border-white/20 backdrop-blur-md p-4 rounded-2xl'>
-                    <img src={product.image} alt={product.name} className='w-20 h-20 object-contain rounded-xl'/>
+                    <img src={`${url}/images/${product.image}`} alt={product.name} className='w-20 h-20 object-contain rounded-xl'/>
                     <div>
                       <h3 className='text-lg font-semibold'>{product.name}</h3>
                       <p className='text-sm text-gray-300'>Quantity: {product.quantity}</p>

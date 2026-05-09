@@ -10,7 +10,7 @@ const Cart = () => {
   const cartProducts = Object.keys(cartItems).map((itemId) => {
   const product = all_products.find((p) => p.id === itemId);
   return { ...product, quantity: cartItems[itemId] };
-  });
+  }).filter(Boolean);
   
 return (
     <section className='relative w-full min-h-screen flex items-center bg-linear-to-r from-indigo-900 via-purple-900 to-pink-900 text-white py-24 px-6 sm:px-10'>

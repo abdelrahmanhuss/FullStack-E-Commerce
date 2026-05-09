@@ -126,6 +126,14 @@ export class OrdersService {
       },
     });
 
+    await this.prisma.notification.create({
+      data: {
+        message: `Your order ${order.id} has been placed successfully!`,
+        userId: order.userId,
+        orderId,
+      },
+    });
+
     await this.prisma.user.update({
       where: { id: order.userId },
       data: {

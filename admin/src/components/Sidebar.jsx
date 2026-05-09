@@ -7,7 +7,8 @@ import {
   Menu,
   X,
   LogOut,
-  Users
+  Users,
+  Bell
 } from 'lucide-react'
 
 const Sidebar = () => {
@@ -34,6 +35,11 @@ const Sidebar = () => {
       to: "/admin/users",
       label: "Manage Users",
       Icon: Users
+    },
+    {
+      to: "/admin/notifications",
+      label: "Notifications",
+      Icon: Bell
     }
   ]
 
