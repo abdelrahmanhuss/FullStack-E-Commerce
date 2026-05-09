@@ -7,6 +7,7 @@ import AdminLogin from './components/AdminLogin'
 import { Route, Routes } from 'react-router-dom'
 import { Toaster } from "react-hot-toast"
 import Users from './components/Users'
+import Notifications from './components/Notifications'
 const App = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const App = () => {
       <Route path="/admin/list" element={<ProtectedRoute><List /></ProtectedRoute>} />
       <Route path="/admin/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
       <Route path="/admin/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+      <Route path="/admin/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
     </Routes>
     </>
   )
