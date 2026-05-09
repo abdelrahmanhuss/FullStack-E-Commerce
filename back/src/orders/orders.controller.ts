@@ -11,6 +11,7 @@ import {
 import { OrdersService } from './orders.service';
 import { PlaceOrderDto } from './dto/place-order.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminGuard } from '../auth/guards/admin.guard';
 
 @Controller('orders')
 export class OrdersController {
@@ -33,11 +34,13 @@ export class OrdersController {
     return await this.ordersService.getUserOrders(req.user.sub);
   }
 
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Get('list')
   async getAllOrders() {
     return await this.ordersService.getAllOrders();
   }
 
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Patch('status/:id')
   async updateStatus(@Param('id') id: string, @Body('status') status: string) {
     return await this.ordersService.updateOrderStatus(id, status);

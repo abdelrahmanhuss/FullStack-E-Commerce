@@ -14,6 +14,7 @@ import {
 import { ProductsService } from './products.service';
 import multer from 'multer';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminGuard } from '../auth/guards/admin.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import CreateProductDto from './dto/createProduct.dto';
 
@@ -31,9 +32,9 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post('add')
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @UseInterceptors(FileInterceptor('image', { storage }))
   @UsePipes(new ValidationPipe())
-  // @UseGuards(JwtAuthGuard)
   create(
     @Body() body: CreateProductDto,
     @UploadedFile() file?: Express.Multer.File,
@@ -54,6 +55,7 @@ export class ProductsController {
   getOne(@Param('id') id: string) {
     return this.productsService.getOne(id);
   }
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Delete(':id')
   removeProduct(@Param('id') id: string) {
     return this.productsService.removeProduct(id);

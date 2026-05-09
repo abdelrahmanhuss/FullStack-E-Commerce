@@ -20,6 +20,15 @@ const ShopContextProvider = ({children})=>{
         return localStorage.getItem("token") || "";
     });
 
+    const [user,setUser] = useState(() => {
+        const savedUser = localStorage.getItem("user");
+        return savedUser ? JSON.parse(savedUser) : null;
+    });
+
+    const [isAdmin,setIsAdmin] = useState(() => {
+        return localStorage.getItem("isAdmin") === 'true';
+    });
+
     useEffect(()=>{
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     },[cartItems]);
@@ -84,14 +93,16 @@ const ShopContextProvider = ({children})=>{
     const getTotalCartAmount = () => {
         return Object.entries(cartItems).reduce((total, [id, quantity]) => {
             const product = products?.find(p => p.id?.toString() === id);
-if (!product) return total;
+            if (!product) return total;
             return total + (product ? product.price * quantity : 0);
         }, 0);
     };
 
     const fetchProductsList = async()=>{
         try{
-            const response = await axios.get(`${url}/products/list`);
+            const response = await axios.get(`${url}/products/list`,{
+                headers: {Authorization: `Bearer ${token}`},
+            });
             setProducts(response.data.data || []);
         }catch(err){
             console.log(err);
@@ -106,9 +117,20 @@ if (!product) return total;
   Authorization: `Bearer ${currentToken}`,
 }
             });
-setCartItems(response.data.data?.cartData || response.data.cartData || {});        }catch(err){
+            setCartItems(response.data.data?.cartData || response.data.cartData || {});
+        }catch(err){
             console.log(err);
         }
+    };
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('isAdmin');
+        setToken('');
+        setUser(null);
+        setIsAdmin(false);
+        setCartItems({});
     };
 
     useEffect(() => {
@@ -136,7 +158,12 @@ setCartItems(response.data.data?.cartData || response.data.cartData || {});     
         setToken,
         clearCart,
         setCartItems,
-        loadCartData
+        loadCartData,
+        user,
+        setUser,
+        isAdmin,
+        setIsAdmin,
+        logout,
     };
 
     return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>

@@ -36,6 +36,7 @@ export class AdminService {
       email: user.email,
       name: user.name,
       isAdmin: true,
+      role: 'ADMIN',
     });
 
     return {
@@ -46,6 +47,7 @@ export class AdminService {
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        role: 'ADMIN',
       },
     };
   }
