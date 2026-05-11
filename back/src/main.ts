@@ -1,34 +1,34 @@
-import 'dotenv/config';
 import * as express from 'express';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
-let app;
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
-export default async (req, res) => {
-  if (!app) {
-    app = await NestFactory.create(AppModule);
+  app.use('/images', express.static('uploads'));
 
-    app.use('/images', express.static('uploads'));
+  // تفعيل CORS
+  app.enableCors({
+    origin: 'http://localhost:5173', // عنوان Frontend (Vite)
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
 
-    app.enableCors({
-      origin: process.env.FRONTEND_URL,
-      credentials: true,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
-    });
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: true,
-      }),
-    );
-
-    await app.init();
-  }
-
-  app.getHttpAdapter().getInstance()(req, res);
-};
+  await app.listen(process.env.PORT ?? 4000);
+  console.log(`Server is running on port ${process.env.PORT ?? 4000}`);
+}
+bootstrap().catch((error) => {
+  // Surface bootstrap failures and terminate with non-zero exit code.
+  console.error('Application failed to start:', error);
+  process.exit(1);
+});
