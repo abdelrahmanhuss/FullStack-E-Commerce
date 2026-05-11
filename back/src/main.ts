@@ -10,7 +10,7 @@ async function bootstrap() {
 
   // تفعيل CORS
   app.enableCors({
-    origin: 'http://localhost:5173', // عنوان Frontend (Vite)
+    origin: 'https://full-stack-e-commerce-liard.vercel.app', // عنوان Frontend (Vite)
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
