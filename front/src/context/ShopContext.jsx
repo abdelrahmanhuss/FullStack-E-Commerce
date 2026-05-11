@@ -6,7 +6,7 @@ export const ShopContext = createContext();
 
 const ShopContextProvider = ({children})=>{
 
-    const url = "http://localhost:4000";
+    const url = "https://full-stack-e-commerce-liard.vercel.app/";
 
     const [cartItems,setCartItems] = useState(() => {
         const savedCart = localStorage.getItem("cartItems");
